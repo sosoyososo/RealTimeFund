@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		470BFF291B259F9600A7B30A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF281B259F9600A7B30A /* AppDelegate.swift */; };
-		470BFF2B1B259F9600A7B30A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF2A1B259F9600A7B30A /* MasterViewController.swift */; };
 		470BFF2D1B259F9600A7B30A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF2C1B259F9600A7B30A /* DetailViewController.swift */; };
 		470BFF301B259F9600A7B30A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470BFF2E1B259F9600A7B30A /* Main.storyboard */; };
 		470BFF321B259F9600A7B30A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470BFF311B259F9600A7B30A /* Images.xcassets */; };
 		470BFF351B259F9600A7B30A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 470BFF331B259F9600A7B30A /* LaunchScreen.xib */; };
 		470BFF411B259F9600A7B30A /* howbuyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF401B259F9600A7B30A /* howbuyTests.swift */; };
+		470BFF4A1B259FC000A7B30A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF2A1B259F9600A7B30A /* MasterViewController.swift */; };
+		470BFF4E1B25DC2000A7B30A /* SearchFundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF4D1B25DC2000A7B30A /* SearchFundController.swift */; };
+		470BFF531B25E45500A7B30A /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF501B25E45500A7B30A /* HTMLNode.swift */; };
+		470BFF541B25E45500A7B30A /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF511B25E45500A7B30A /* HTMLParser.swift */; };
+		470BFF561B25E48100A7B30A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 470BFF551B25E48100A7B30A /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +42,11 @@
 		470BFF3A1B259F9600A7B30A /* howbuyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howbuyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		470BFF3F1B259F9600A7B30A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		470BFF401B259F9600A7B30A /* howbuyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howbuyTests.swift; sourceTree = "<group>"; };
+		470BFF4D1B25DC2000A7B30A /* SearchFundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFundController.swift; sourceTree = "<group>"; };
+		470BFF501B25E45500A7B30A /* HTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLNode.swift; sourceTree = "<group>"; };
+		470BFF511B25E45500A7B30A /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
+		470BFF521B25E45500A7B30A /* Swift-HTML-Parser-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Swift-HTML-Parser-Bridging-Header.h"; sourceTree = "<group>"; };
+		470BFF551B25E48100A7B30A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470BFF561B25E48100A7B30A /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +71,7 @@
 		470BFF1A1B259F9600A7B30A = {
 			isa = PBXGroup;
 			children = (
+				470BFF551B25E48100A7B30A /* libxml2.dylib */,
 				470BFF251B259F9600A7B30A /* howbuy */,
 				470BFF3D1B259F9600A7B30A /* howbuyTests */,
 				470BFF241B259F9600A7B30A /* Products */,
@@ -79,9 +90,11 @@
 		470BFF251B259F9600A7B30A /* howbuy */ = {
 			isa = PBXGroup;
 			children = (
+				470BFF4F1B25E43B00A7B30A /* HtmlParser */,
 				470BFF281B259F9600A7B30A /* AppDelegate.swift */,
 				470BFF2A1B259F9600A7B30A /* MasterViewController.swift */,
 				470BFF2C1B259F9600A7B30A /* DetailViewController.swift */,
+				470BFF4D1B25DC2000A7B30A /* SearchFundController.swift */,
 				470BFF2E1B259F9600A7B30A /* Main.storyboard */,
 				470BFF311B259F9600A7B30A /* Images.xcassets */,
 				470BFF331B259F9600A7B30A /* LaunchScreen.xib */,
@@ -113,6 +126,16 @@
 				470BFF3F1B259F9600A7B30A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		470BFF4F1B25E43B00A7B30A /* HtmlParser */ = {
+			isa = PBXGroup;
+			children = (
+				470BFF501B25E45500A7B30A /* HTMLNode.swift */,
+				470BFF511B25E45500A7B30A /* HTMLParser.swift */,
+				470BFF521B25E45500A7B30A /* Swift-HTML-Parser-Bridging-Header.h */,
+			);
+			name = HtmlParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,9 +238,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470BFF4E1B25DC2000A7B30A /* SearchFundController.swift in Sources */,
 				470BFF2D1B259F9600A7B30A /* DetailViewController.swift in Sources */,
-				470BFF2B1B259F9600A7B30A /* MasterViewController.swift in Sources */,
 				470BFF291B259F9600A7B30A /* AppDelegate.swift in Sources */,
+				470BFF541B25E45500A7B30A /* HTMLParser.swift in Sources */,
+				470BFF531B25E45500A7B30A /* HTMLNode.swift in Sources */,
+				470BFF4A1B259FC000A7B30A /* MasterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,9 +372,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = howbuy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./howbuy/Swift-HTML-Parser-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -356,9 +388,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = howbuy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./howbuy/Swift-HTML-Parser-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -415,6 +453,7 @@
 				470BFF461B259F9600A7B30A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		470BFF471B259F9600A7B30A /* Build configuration list for PBXNativeTarget "howbuyTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +462,7 @@
 				470BFF491B259F9600A7B30A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
