@@ -28,7 +28,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                         println(err)
                     } else {
                         if let timeNode = parser.rootNode?.findNodeById("valuationTime") {
-                            if let time = timeNode.getAttributeNamed("value")  as String? {                              
+                            if let time = timeNode.getAttributeNamed("value")  as String? {
                                 let imgName = "http://static.howbuy.com/images/fund/valuation/160119_"+time+".png"
                                 var htmlStr = NSString(format: "<img src=%@></img>", imgName)
                                 if let spanNodes = parser.rootNode?.findChildTags("span") {
@@ -37,15 +37,20 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                                         let node = spanNodes[index]
                                         if node.className=="con_value con_value_down" {
                                             htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        } else if node.className=="con_value con_value_up" {
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
                                         }
                                         if node.className=="con_ratio_green con_ratio_down" {
-                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                            htmlStr = NSString(format: "<font color=\"#65AFF8\">%@</font>  %@", node.contents, htmlStr)
+                                        } else if node.className=="con_ratio_red con_ratio_up" {
+                                            htmlStr = NSString(format: "<font color=\"#DF1921\">%@</font>  %@", node.contents, htmlStr)
                                         }
                                         if node.className=="con_ratio_green" {
                                             htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        } else if node.className=="con_ratio_red" {
                                         }
                                         if node.className=="tips_icon_con" {
-                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                            htmlStr = NSString(format: "净值:%@  %@", node.contents, htmlStr)
                                         }
                                     }
                                 }
