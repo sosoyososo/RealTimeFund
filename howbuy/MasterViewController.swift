@@ -12,7 +12,8 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var addItem: UIBarButtonItem!
 
     var detailViewController: DetailViewController? = nil
-    var objects = [AnyObject]()
+    var objects  = Dictionary<String, String>()
+    var allKeys = [String]()
 
 
     override func awakeFromNib() {
@@ -25,31 +26,43 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        self.navigationItem.leftBarButtonItem?.title = "编辑"
 
         self.navigationItem.rightBarButtonItem = addItem
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
+        
+        self.allKeys = NSUserDefaults.standardUserDefaults().valueForKey("num") as! [String]
+        self.objects = NSUserDefaults.standardUserDefaults().valueForKey("name") as! Dictionary<String, String>
+        self.tableView.reloadData()
     }
 
-    @IBAction func insertNewObject(sender: AnyObject) {
-        objects.insert(NSNumber(integer: self.objects.count), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    func insertNewObject(name : String,num : String) {
+        self.allKeys.insert(num, atIndex: 0)
+        self.objects[num] = name
+        self.tableView.reloadData()
+        NSUserDefaults.standardUserDefaults().setValue(self.allKeys, forKey: "num")
+        NSUserDefaults.standardUserDefaults().setValue(self.objects, forKey: "name")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let object = objects[indexPath.row] as! NSNumber
+                let num = self.allKeys[indexPath.row] as String
+                let name = self.objects[num]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.detailItem = num
+                controller.title = name
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
+        } else if segue.identifier == "Add" {
+            let controller = (segue.destinationViewController as! UINavigationController).topViewController as! SearchFundController
+            controller.master = self
         }
     }
 
@@ -65,8 +78,10 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 
-        let object = objects[indexPath.row] as! NSNumber
-        cell.textLabel!.text = object.description
+        let num = self.allKeys[indexPath.row] as String
+        let name = self.objects[num]
+        cell.textLabel!.text = name
+        cell.detailTextLabel?.text = num
         return cell
     }
 
@@ -76,8 +91,12 @@ class MasterViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            let num = self.allKeys[indexPath.row] as String
+            self.allKeys.removeAtIndex(indexPath.row)
+            self.objects.removeValueForKey(num)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)            
+            NSUserDefaults.standardUserDefaults().setValue(self.allKeys, forKey: "num")
+            NSUserDefaults.standardUserDefaults().setValue(self.objects, forKey: "name")
         } else if editingStyle == .Insert {
         }
     }

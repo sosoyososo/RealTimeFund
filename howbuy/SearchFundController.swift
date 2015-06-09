@@ -16,13 +16,13 @@ class SearchFundController: UITableViewController, UISearchBarDelegate {
     
     var objects  = Dictionary<String, String>()
     var allKeys = [String]()
+    var master : MasterViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.titleView = self.saerchBar
         self.navigationItem.leftBarButtonItem = self.cancelItem
     }
-    
     @IBAction func cancel() {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
         })
@@ -71,6 +71,13 @@ class SearchFundController: UITableViewController, UISearchBarDelegate {
         cell.detailTextLabel?.text = num
         return cell
     }
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            let num = self.allKeys[indexPath.row] as String
+            let name = self.objects[num]
+            self.master?.insertNewObject(name!, num: num)
+        })
+    }
 }
 

@@ -18,6 +18,7 @@
 		470BFF531B25E45500A7B30A /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF501B25E45500A7B30A /* HTMLNode.swift */; };
 		470BFF541B25E45500A7B30A /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BFF511B25E45500A7B30A /* HTMLParser.swift */; };
 		470BFF561B25E48100A7B30A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 470BFF551B25E48100A7B30A /* libxml2.dylib */; };
+		470BFF5A1B2696B400A7B30A /* detail.js in Resources */ = {isa = PBXBuildFile; fileRef = 470BFF581B26938400A7B30A /* detail.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		470BFF511B25E45500A7B30A /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
 		470BFF521B25E45500A7B30A /* Swift-HTML-Parser-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Swift-HTML-Parser-Bridging-Header.h"; sourceTree = "<group>"; };
 		470BFF551B25E48100A7B30A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		470BFF581B26938400A7B30A /* detail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = detail.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +73,6 @@
 		470BFF1A1B259F9600A7B30A = {
 			isa = PBXGroup;
 			children = (
-				470BFF551B25E48100A7B30A /* libxml2.dylib */,
 				470BFF251B259F9600A7B30A /* howbuy */,
 				470BFF3D1B259F9600A7B30A /* howbuyTests */,
 				470BFF241B259F9600A7B30A /* Products */,
@@ -90,6 +91,7 @@
 		470BFF251B259F9600A7B30A /* howbuy */ = {
 			isa = PBXGroup;
 			children = (
+				470BFF571B26936200A7B30A /* Src */,
 				470BFF4F1B25E43B00A7B30A /* HtmlParser */,
 				470BFF281B259F9600A7B30A /* AppDelegate.swift */,
 				470BFF2A1B259F9600A7B30A /* MasterViewController.swift */,
@@ -123,6 +125,7 @@
 		470BFF3E1B259F9600A7B30A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				470BFF551B25E48100A7B30A /* libxml2.dylib */,
 				470BFF3F1B259F9600A7B30A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -136,6 +139,14 @@
 				470BFF521B25E45500A7B30A /* Swift-HTML-Parser-Bridging-Header.h */,
 			);
 			name = HtmlParser;
+			sourceTree = "<group>";
+		};
+		470BFF571B26936200A7B30A /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				470BFF581B26938400A7B30A /* detail.js */,
+			);
+			name = Src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +232,7 @@
 				470BFF301B259F9600A7B30A /* Main.storyboard in Resources */,
 				470BFF351B259F9600A7B30A /* LaunchScreen.xib in Resources */,
 				470BFF321B259F9600A7B30A /* Images.xcassets in Resources */,
+				470BFF5A1B2696B400A7B30A /* detail.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

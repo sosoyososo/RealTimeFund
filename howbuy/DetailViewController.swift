@@ -8,19 +8,18 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
 
-    var detailItem: NSNumber? {
+    var detailItem: String? {
         didSet {
             self.configureView()
         }
     }
-
     func configureView() {
-        if let detail: NSNumber = self.detailItem {
+        if let detail: String = self.detailItem {
             if let label = self.webView {
-                let url = "http://www.howbuy.com/fund/" + detail.description
+                let url = "http://www.howbuy.com/fund/" + detail
                 self.webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
             }
         }
@@ -29,6 +28,14 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        let path = NSBundle.mainBundle().pathForResource("detail", ofType: "js")
+        let js = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error:nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            webView.stringByEvaluatingJavaScriptFromString(js as! String)
+        })
     }
 }
 
