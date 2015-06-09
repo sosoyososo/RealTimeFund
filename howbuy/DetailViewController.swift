@@ -18,24 +18,49 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     }
     func configureView() {
         if let detail: String = self.detailItem {
-            if let label = self.webView {
-                let url = "http://www.howbuy.com/fund/" + detail
-                self.webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
-            }
+            let ajaxUrl = "http://www.howbuy.com/fund/ajax/gmfund/valuation/valuationnav.htm?jjdm=" + detail
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                var ajax = NSString(contentsOfURL: NSURL(string: ajaxUrl)!, encoding: NSUTF8StringEncoding, error: nil)
+                if ajax?.length>0 {
+                    var err : NSError?
+                    var parser = HTMLParser(html: ajax! as String, error: &err)
+                    if err != nil {
+                        println(err)
+                    } else {
+                        if let timeNode = parser.rootNode?.findNodeById("valuationTime") {
+                            if let time = timeNode.getAttributeNamed("value")  as String? {                              
+                                let imgName = "http://static.howbuy.com/images/fund/valuation/160119_"+time+".png"
+                                var htmlStr = NSString(format: "<img src=%@></img>", imgName)
+                                if let spanNodes = parser.rootNode?.findChildTags("span") {
+                                    var index : Int
+                                    for index = 0; index < spanNodes.count; ++index {
+                                        let node = spanNodes[index]
+                                        if node.className=="con_value con_value_down" {
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        }
+                                        if node.className=="con_ratio_green con_ratio_down" {
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        }
+                                        if node.className=="con_ratio_green" {
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        }
+                                        if node.className=="tips_icon_con" {
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                        }
+                                    }
+                                }
+                                self.webView.loadHTMLString(htmlStr as String, baseURL: nil)
+                            }
+                        }
+                    }
+                }
+            })
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        let path = NSBundle.mainBundle().pathForResource("detail", ofType: "js")
-        let js = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error:nil)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            webView.stringByEvaluatingJavaScriptFromString(js as! String)
-        })
     }
 }
 

@@ -42,7 +42,7 @@ func rawContentsOfNode(node : xmlNode, pointer: xmlNodePtr) -> String! {
 */
 public class HTMLParser {
     private var _doc     : htmlDocPtr = nil
-    private var rootNode : HTMLNode?
+    var rootNode : HTMLNode?
     public var htmlString : String = ""
     
     /**
