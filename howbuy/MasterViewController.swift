@@ -35,9 +35,12 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
-        
-        self.allKeys = NSUserDefaults.standardUserDefaults().valueForKey("num") as! [String]
-        self.objects = NSUserDefaults.standardUserDefaults().valueForKey("name") as! Dictionary<String, String>
+        if let obj = NSUserDefaults.standardUserDefaults().valueForKey("num") as? [String] {
+            self.allKeys = obj
+        }
+        if let obj = NSUserDefaults.standardUserDefaults().valueForKey("name") as? Dictionary<String, String> {
+            self.objects = obj
+        }
         self.tableView.reloadData()
     }
 

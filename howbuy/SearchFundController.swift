@@ -28,7 +28,7 @@ class SearchFundController: UITableViewController, UISearchBarDelegate {
         })
     }
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             let url  = "http://s.howbuy.com/search.do?q=" + searchText
             var content = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSUTF8StringEncoding, error: nil)
 
@@ -51,10 +51,11 @@ class SearchFundController: UITableViewController, UISearchBarDelegate {
                 self.objects[num!] = name!
                 self.allKeys.insert(num!, atIndex: 0)
             }
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
         })
     }
-    
     
     // MARK: - Table View
     
