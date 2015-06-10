@@ -29,7 +29,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                     } else {
                         if let timeNode = parser.rootNode?.findNodeById("valuationTime") {
                             if let time = timeNode.getAttributeNamed("value")  as String? {
-                                let imgName = "http://static.howbuy.com/images/fund/valuation/160119_"+time+".png"
+                                let imgName = "http://static.howbuy.com/images/fund/valuation/"+detail+"_"+time+".png"
                                 var htmlStr = NSString(format: "<br><br><img src=%@></img>", imgName)
                                 if let spanNodes = parser.rootNode?.findChildTags("span") {
                                     var index : Int
