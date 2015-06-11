@@ -31,25 +31,64 @@ class SearchFundController: UITableViewController, UISearchBarDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             let url  = "http://s.howbuy.com/search.do?q=" + searchText
             var content = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSUTF8StringEncoding, error: nil)
-
-            let numStart = "<td class=\\\"d-l\\\">"
-            let numEnd = "</td><td class=\\\"d-l\\\"><p class=\\\"fund-n\\\">"
-            let nameEnd = "</p>"
-
+            if let range = content?.rangeOfString("<") {
+                if range.length > 0 {
+                    content = content?.substringFromIndex(range.location);
+                }
+            }
+            if let range = content?.rangeOfString(">", options:NSStringCompareOptions.BackwardsSearch) {
+                if range.length>0 {
+                    content = content?.substringToIndex(range.location+1);
+                }
+            }
+            
             self.allKeys.removeAll(keepCapacity: true)
             self.objects.removeAll(keepCapacity: true)
-            var range = content?.rangeOfString(numStart)
-            for ;range?.length>0; {
-                let range1 = content?.rangeOfString(numEnd)
-                let numLength = ((range1?.location)! as Int) - ((range?.length)! as Int)  - ((range?.location)! as Int)
-                let numRange = NSMakeRange(((range?.length)! as Int) + ((range?.location)! as Int), numLength)
-                let num = content?.substringWithRange(numRange)
-                content = content?.substringFromIndex(((range1?.location)! as Int) + ((range1?.length)! as Int))
-                let range2 = content?.rangeOfString(nameEnd)
-                let name = content?.substringToIndex(((range2?.location)! as Int))
-                range = content?.rangeOfString(numStart)
-                self.objects[num!] = name!
-                self.allKeys.insert(num!, atIndex: 0)
+            
+            var err : NSError?
+            var parser = HTMLParser(html: content! as String, error: &err)
+            if err != nil {
+                println(err)
+            } else {
+                if let trNodes = parser.rootNode?.findChildTags("tr") {
+                    var indexTr : Int
+                    for indexTr=0;indexTr<trNodes.count;++indexTr {
+                        let trNode = trNodes[indexTr]
+                        
+                        var indexTd : Int
+                        var num = ""
+                        var name : String?
+                        var tdNodes = trNode.findChildTags("td")
+                        for indexTd=0;indexTd<tdNodes.count;++indexTd {
+                            let tdNode = tdNodes[indexTd]
+                            if tdNode.className == "\\\"d-l\\\"" {
+                                let pNodes = tdNode.findChildTags("p")
+                                if  pNodes.count > 0 {
+                                    name = pNodes[0].contents
+                                } else {
+                                    num = tdNode.contents
+                                    let spans = tdNode.findChildTags("span")
+                                    if  spans.count > 0 {
+                                        var span = spans[0]
+                                        num = num + span.contents
+                                        
+                                        let spanRange = tdNode.rawContents.rangeOfString(span.rawContents) as Range!
+                                        var content = tdNode.rawContents.substringFromIndex(spanRange.endIndex)
+                                        content = content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                                        content = content.substringToIndex((content.rangeOfString("<")?.startIndex)!)
+                                        num = num + content
+                                    }
+                                }
+                            }
+                        }
+                        if name?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 && name?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0  {
+                            if num.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "--")).lengthOfBytesUsingEncoding(NSUTF8StringEncoding)>0 {
+                                self.objects[num] = name!
+                                self.allKeys.insert(num, atIndex: 0)
+                            }
+                        }
+                    }
+                }
             }
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.tableView.reloadData()
