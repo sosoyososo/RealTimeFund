@@ -46,11 +46,12 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                                             htmlStr = NSString(format: "<font color=\"#DF1921\">%@</font>  %@", node.contents, htmlStr)
                                         }
                                         if node.className=="con_ratio_green" {
-                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
+                                            htmlStr = NSString(format: "<font color=\"#65AFF8\">%@</font>  %@", node.contents, htmlStr)
                                         } else if node.className=="con_ratio_red" {
+                                            htmlStr = NSString(format: "<font color=\"#DF1921\">%@</font>  %@", node.contents, htmlStr)
                                         }
                                         if node.className=="tips_icon_con" {
-                                            htmlStr = NSString(format: "净值:%@  %@", node.contents, htmlStr)
+                                            htmlStr = NSString(format: "%@  %@", node.contents, htmlStr)
                                         }
                                     }
                                 }
